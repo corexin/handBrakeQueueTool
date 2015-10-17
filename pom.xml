@@ -3,6 +3,8 @@
   <groupId>au.com.simplesoftware</groupId>
   <artifactId>handBrakeUtil</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -16,4 +18,11 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>commons-io</groupId>
+  		<artifactId>commons-io</artifactId>
+  		<version>2.4</version>
+  	</dependency>
+  </dependencies>
 </project>

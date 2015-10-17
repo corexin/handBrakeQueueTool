@@ -1,7 +1,10 @@
 package au.com.simplesoftware.handbrake;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
+
+import org.apache.commons.io.FileUtils;
 
 public class HandBrakeQueueXmlGenerator {
 	public static final String header = "<?xml version=\"1.0\"?><ArrayOfQueueTask xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
@@ -12,20 +15,32 @@ public class HandBrakeQueueXmlGenerator {
 	
 	public static final String tailer = "</ArrayOfQueueTask>";
 	
-	public static final String filePath = "E:\\tmp\\video";
+	public static final String filePath = "C:\\tmp\\video\\2015-07-31";
 	
 	public static void main(String[] args) {
+		StringBuffer sb = new StringBuffer();
 		
-		System.out.println(header);
+		sb.append(header);
+	
 		File[] list = new File(filePath).listFiles();
 		for(File file: list)
 		{
-			System.out.println(repeatedHeader);
+			sb.append(repeatedHeader);
 			String absolutePath = file.getAbsolutePath();
 			String format = MessageFormat.format(repeatedItem, absolutePath, absolutePath.replace(".mp4", ""));
-			System.out.println(format);
-			System.out.println(repeatedTailer);
+			sb.append(format);
+			sb.append(repeatedTailer);
 		}
-		System.out.println(tailer);
+		sb.append(tailer);
+		System.out.println(sb.toString());
+		
+		File file = new File(filePath + "\\queue.hbq");
+		try {
+			FileUtils.writeStringToFile(file, sb.toString());
+		} catch (IOException e) {
+			System.err.println("ERROR generating handbrake queue file.");
+		}
 	}
+	
+ 
 }
